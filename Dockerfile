@@ -1,5 +1,7 @@
 FROM debian:latest
 
+MAINTAINER kukam <kukam@freebox.cz>
+
 RUN apt-get clean all
 RUN apt-get update
 RUN apt-get -y upgrade
