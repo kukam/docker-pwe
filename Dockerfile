@@ -11,5 +11,7 @@ RUN apt-get -y install procps net-tools perl libcgi-fast-perl libclass-inspector
 #RUN wget -qO- https://github.com/kukam/PWE/archive/master.zip | bsdtar -xvf-
 #RUN mv /PWE-master /PWE
 RUN apt-get -y install git
-RUN git clone https://github.com/kukam/PWE.git /PWE
 RUN apt-get clean all
+RUN mkdir /PWE
+RUN git clone https://github.com/kukam/PWE.git /PWE
+VOLUME /PWE
