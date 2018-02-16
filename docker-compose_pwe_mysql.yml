@@ -3,24 +3,40 @@ version: '3'
 services:
    mysql57:
      image: mysql:5.7
+     container_name: mysql57
+     restart: always
      volumes:
-       - mysql57:/var/lib/mysql
+       - pwe_mysql57:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: root123
        MYSQL_DATABASE: pwe
        MYSQL_USER: pwe
        MYSQL_PASSWORD: pwe
-
+   nginx:
+     image: nginx
+     ports:
+       - "8080:80"
+     volumes:
+       - pwe_source:/PWE
+       - pwe_project:/PWE/webapps/mywebproject.ltd
+     restart: always
+     depends_on:
+       - pwe
    pwe:
      depends_on:
        - mysql57
      image: pwe:latest
+     restart: always
+     container_name: pwe
+     volumes:
+       - pwe_source:/PWE
+       - pwe_project:/PWE/webapps/mywebproject.ltd
      deploy:
        replicas: 1
      ports:
        - "7779:9999"
-     working_dir: /PWE/examples/static_web
-     command: 
+     working_dir: /PWE/examples/static_web # Set te path to your owner project
+     command:
        - ./pwe.fcgi
      stdin_open: true
      tty: true
@@ -32,5 +48,6 @@ services:
        PWE_CONF_DB1_USER: pwe
        PWE_CONF_DB1_PASS: pwe
 volumes:
-    mysql57:
-    pwe:
+    pwe_source:
+    pwe_mysql57:
+    pwe_project:
