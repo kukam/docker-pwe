@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+   mysql57:
+     image: mysql:5.7
+     volumes:
+       - mysql57:/var/lib/mysql
+     environment:
+       MYSQL_ROOT_PASSWORD: root123
+       MYSQL_DATABASE: pwe
+       MYSQL_USER: pwe
+       MYSQL_PASSWORD: pwe
+
+   pwe:
+     depends_on:
+       - mysql57
+     image: pwe:latest
+     deploy:
+       replicas: 1
+     ports:
+       - "7779:9999"
+     working_dir: /PWE/examples/static_web
+     command: 
+       - ./pwe.fcgi
+     stdin_open: true
+     tty: true
+     environment:
+       FCGI_SOCKET_PATH: :9999
+       PWE_CONF_DB1_HOST: db
+       PWE_CONF_DB1_PORT: 3306
+       PWE_CONF_DB1_DBNAME: pwe
+       PWE_CONF_DB1_USER: pwe
+       PWE_CONF_DB1_PASS: pwe
+volumes:
+    mysql57:
+    pwe:
