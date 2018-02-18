@@ -6,56 +6,68 @@ services:
      container_name: mysql57
      restart: always
      volumes:
-       - pwe_mysql57:/var/lib/mysql
+       - mysql57:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: root123
        MYSQL_DATABASE: pwe
        MYSQL_USER: pwe
        MYSQL_PASSWORD: pwe
+     networks:
+       - pwenet
    nginx:
-     image: nginx:alpine
+     image: kukam/pwe-nginx
      restart: always
      container_name: nginx
      stdin_open: true
      tty: true
      volumes:
        #- /etc/nginx/docker.conf:/etc/nginx/conf.d/default.conf
-       - pwe_source:/PWE:ro
-       - pwe_project:/PWE/webapps/mywebproject.ltd:ro
-       - pwe_nginx:/NGINX/:ro
+       - source:/PWE:ro
+       - project:/PWE/webapps/mydomain.ltd/:ro
+     networks:
+       - pwenet
      ports:
-       - "8081:80"
-     command: /bin/sh -c "apk update && apk add bash && rm -fr /var/cache/apk/* && cat /NGINX/generic/default.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'" 
+       - "7778:80"
      depends_on:
        - pwe
    pwe:
      depends_on:
        - mysql57
-     image: kukam/pwe:latest
+     image: kukam/pwe
      restart: always
      container_name: pwe
      volumes:
-       - pwe_source:/PWE
-       - pwe_project:/PWE/webapps/mywebproject.ltd
-       - pwe_nginx:/NGINX
+       - source:/PWE
+       - project:/PWE/webapps/mydomain.ltd
      deploy:
        replicas: 1
+     networks:
+       - pwenet
      ports:
-       - "7779:9999"
+       - "7779:7779"
      working_dir: /PWE/examples/generic_web # Set te path to your owner project
      command:
        - ./pwe.fcgi
      stdin_open: true
      tty: true
      environment:
-       FCGI_SOCKET_PATH: :9999
+       FCGI_SOCKET_PATH: :7779
        PWE_CONF_DB1_HOST: mysql57
        PWE_CONF_DB1_PORT: 3306
        PWE_CONF_DB1_DBNAME: pwe
        PWE_CONF_DB1_USER: pwe
        PWE_CONF_DB1_PASS: pwe
+       
 volumes:
-    pwe_source:
-    pwe_nginx:
-    pwe_mysql57:
-    pwe_project:
+    source:
+    nginx:
+    mysql57:
+    project:
+
+networks:
+    pwenet:
+      driver: overlay
+      ipam:
+        driver: default
+        config:
+          - subnet: 172.31.13.0/24 
