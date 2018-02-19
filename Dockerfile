@@ -7,13 +7,11 @@ RUN apk --no-cache --update add git bash && \
   rm -fr /PWEtemp && \
   mkdir /PWEtemp && \
   mkdir /PWE && \
-  git clone https://github.com/kukam/PWE.git /PWEtemp && \
-  mv /PWEtemp/* /PWE && \
-  mv /PWEtemp/.git /PWE && \
-  rm -fr /PWEtemp && \
-  rm -fr /var/cache/apk/*
+  git clone https://github.com/kukam/PWE.git /PWEtemp
 
 VOLUME /PWE
+
+RUN cp -r /PWEtemp/* /PWE
 
 WORKDIR /PWE
 
