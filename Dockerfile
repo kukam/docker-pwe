@@ -3,16 +3,8 @@ FROM alpine:latest
 MAINTAINER kukam <kukam@freebox.cz>
 
 RUN apk --no-cache --update add git bash && \
-  rm -fr /PWE && \
-  rm -fr /PWEtemp && \
-  mkdir /PWEtemp && \
-  mkdir /PWE && \
-  git clone https://github.com/kukam/PWE.git /PWEtemp
+  git clone https://github.com/kukam/PWE.git /PWE.git
 
 VOLUME /PWE
 
-RUN cp -r /PWEtemp/* /PWE
-
-WORKDIR /PWE
-
-CMD git pull
+CMD cp -r /PWE.git/* /PWE
