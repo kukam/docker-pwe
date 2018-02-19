@@ -8,3 +8,6 @@ RUN apk --no-cache add --update git bash && \
   rm -fr /var/cache/apk/* && \
   rm -fr /PWE/*
   git clone https://github.com/kukam/PWE.git /PWE
+
+WORKDIR /PWE
+ENTRYPOINT ["git pull"]
