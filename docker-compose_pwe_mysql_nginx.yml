@@ -1,48 +1,26 @@
 version: '3'
 
 services:
-   mysql57:
-     image: mysql:5.7
-     container_name: mysql57
+   mariadb:
+     image: kukam/pwe-mariadb
+     container_name: mariadb
      restart: always
      volumes:
-       - mysql57:/var/lib/mysql
+       - mariadb:/var/lib/mysql
      environment:
-       MYSQL_ROOT_PASSWORD: root123
-       MYSQL_DATABASE: pwe
+       MYSQL_ROOT_PWD: root123
+       MYSQL_USER_DB: pwe
        MYSQL_USER: pwe
-       MYSQL_PASSWORD: pwe
-     networks:
-       - pwenet
-   nginx:
-     image: kukam/pwe-nginx
-     restart: always
-     container_name: nginx
-     stdin_open: true
-     tty: true
-     volumes:
-       #- /etc/nginx/docker.conf:/etc/nginx/conf.d/default.conf
-       - source:/PWE:ro
-       - project:/PWE/webapps/mydomain.ltd/:ro
-     networks:
-       - pwenet
-     ports:
-       - "7778:80"
-     depends_on:
-       - pwe
-   pwe:
-     depends_on:
-       - mysql57
+       MYSQL_USER_PWD: pwe
+   fastcgi:
      image: kukam/pwe
      restart: always
-     container_name: pwe
+     container_name: fastcgi
      volumes:
        - source:/PWE
        - project:/PWE/webapps/mydomain.ltd
      deploy:
        replicas: 1
-     networks:
-       - pwenet
      ports:
        - "7779:7779"
      working_dir: /PWE/examples/generic_web # Set te path to your owner project
@@ -57,17 +35,28 @@ services:
        PWE_CONF_DB1_DBNAME: pwe
        PWE_CONF_DB1_USER: pwe
        PWE_CONF_DB1_PASS: pwe
-       
+   nginx:
+     image: kukam/pwe-nginx
+     restart: always
+     container_name: nginx
+     stdin_open: true
+     tty: true
+     volumes:
+       #- /etc/nginx/docker.conf:/etc/nginx/conf.d/default.conf
+       - source:/PWE:ro
+       - project:/PWE/webapps/mydomain.ltd/:ro
+     ports:
+       - "7778:80"       
 volumes:
     source:
     nginx:
     mysql57:
     project:
 
-networks:
-    pwenet:
-      driver: overlay
-      ipam:
-        driver: default
-        config:
-          - subnet: 172.31.13.0/24 
+#networks:
+#    pwenet:
+#      driver: overlay
+#      ipam:
+#        driver: default
+#        config:
+#          - subnet: 172.31.13.0/24 
