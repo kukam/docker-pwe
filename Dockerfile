@@ -10,7 +10,6 @@ RUN apt-get clean all && \
   apt-get clean all
 
 RUN git clone https://github.com/kukam/PWE.git /PWE
-ADD https://raw.githubusercontent.com/kukam/docker-pwe/master/nginx-genericweb.conf /NGINX/generic/default.conf
 
 VOLUME /PWE
 
