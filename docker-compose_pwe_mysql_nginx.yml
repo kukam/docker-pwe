@@ -1,9 +1,8 @@
 version: '3'
 
 services:
-   mariadb:
+   mysql57:
      image: kukam/pwe-mariadb
-     container_name: mysql57
      restart: always
      volumes:
        - mariadb:/var/lib/mysql
@@ -15,7 +14,6 @@ services:
    fastcgi:
      image: kukam/pwe
      restart: always
-     container_name: fastcgi
      volumes:
        - source:/PWE
        - project:/PWE/webapps/mydomain.ltd
@@ -38,7 +36,6 @@ services:
    nginx:
      image: kukam/pwe-nginx
      restart: always
-     container_name: nginx
      stdin_open: true
      tty: true
      volumes:
@@ -50,7 +47,7 @@ services:
 volumes:
     source:
     nginx:
-    mysql57:
+    mariadb:
     project:
 
 #networks:
