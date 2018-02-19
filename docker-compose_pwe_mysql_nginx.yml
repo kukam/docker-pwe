@@ -3,7 +3,7 @@ version: '3'
 services:
    mariadb:
      image: kukam/pwe-mariadb
-     container_name: mariadb
+     container_name: mysql57
      restart: always
      volumes:
        - mariadb:/var/lib/mysql
