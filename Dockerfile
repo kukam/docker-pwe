@@ -1,20 +1,13 @@
-FROM debian:latest
+FROM alpine:latest
 
 MAINTAINER kukam <kukam@freebox.cz>
 
-RUN apt-get clean all && \
-  apt-get update && \
-  apt-get -y upgrade && \
-  apt-get -y install perl libcgi-fast-perl libclass-inspector-perl cstocs libmail-rfc822-address-perl libjson-perl libtemplate-perl libdbd-mysql-perl libdbd-pg-perl libmoose-perl && \
-  apt-get -y install git procps net-tools && \
-  apt-get clean all
-
-RUN git clone https://github.com/kukam/PWE.git /PWE
+RUN apk --no-cache add --update git bash && \
+  rm -fr /var/cache/apk/* && \
+  git clone https://github.com/kukam/PWE.git /PWE
 
 VOLUME /PWE
 
 WORKDIR /PWE
-#RUN git pull
-#RUN git reset --hard
 
 ENTRYPOINT [ "git pull" ]
