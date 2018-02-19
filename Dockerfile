@@ -10,4 +10,4 @@ VOLUME /PWE
 
 WORKDIR /PWE
 
-ENTRYPOINT [ "git pull" ]
+ENTRYPOINT git pull
