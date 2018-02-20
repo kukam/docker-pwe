@@ -1,7 +1,12 @@
 version: '3'
 
 services:
-   mysql57:
+   pwe:
+     image: kukam/pwe
+     volumes:
+       - source:/PWE
+     restart: on-failure
+   mariadb:
      image: kukam/pwe-mariadb
      restart: always
      volumes:
@@ -12,48 +17,43 @@ services:
        MYSQL_USER: pwe
        MYSQL_USER_PWD: pwe
    fastcgi:
-     image: kukam/pwe
+     image: kukam/pwe-fastcgi
      restart: always
      volumes:
        - source:/PWE
-       - project:/PWE/webapps/mydomain.ltd
+       #- source:/PWE:ro
+       #- project:/PWE/webapps/mydomain.ltd # Uncoment te path to your owner project
      deploy:
        replicas: 1
      ports:
        - "7779:7779"
-     working_dir: /PWE/examples/generic_web # Set te path to your owner project
-     command:
-       - ./pwe.fcgi
+     #working_dir: /PWE/examples/generic_web # Set te path to your owner project
+     #command:
+     #  - ./pwe.fcgi
      stdin_open: true
      tty: true
      environment:
        FCGI_SOCKET_PATH: :7779
-       PWE_CONF_DB1_HOST: mysql57
-       PWE_CONF_DB1_PORT: 3306
-       PWE_CONF_DB1_DBNAME: pwe
-       PWE_CONF_DB1_USER: pwe
-       PWE_CONF_DB1_PASS: pwe
+       PWE_CONF_db1_host: mariadb
+       PWE_CONF_db1_port: 3306
+       PWE_CONF_db1_dbname: pwe
+       PWE_CONF_db1_user: pwe
+       PWE_CONF_db1_pass: pwe
+       PWE_CONF_home: "/PWE/examples/generic_web"
    nginx:
      image: kukam/pwe-nginx
      restart: always
      stdin_open: true
      tty: true
      volumes:
-       #- /etc/nginx/docker.conf:/etc/nginx/conf.d/default.conf
        - source:/PWE:ro
-       - project:/PWE/webapps/mydomain.ltd/:ro
+       #- project:/PWE/webapps/mydomain.ltd:ro # Uncoment te path to your owner project
      ports:
        - "7778:80"       
+     environment:
+       PWE_CONF_home: "/PWE/examples/generic_web"
 volumes:
     source:
     nginx:
     mariadb:
     project:
-
-#networks:
-#    pwenet:
-#      driver: overlay
-#      ipam:
-#        driver: default
-#        config:
-#          - subnet: 172.31.13.0/24 
