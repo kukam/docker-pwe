@@ -34,12 +34,12 @@ services:
      tty: true
      environment:
        FCGI_SOCKET_PATH: :7779
-       PWE_CONF_db1_host: mariadb
-       PWE_CONF_db1_port: 3306
-       PWE_CONF_db1_dbname: pwe
-       PWE_CONF_db1_user: pwe
-       PWE_CONF_db1_pass: pwe
-       PWE_CONF_home: "/PWE/examples/generic_web"
+       PWE_CONF_dbi_db1_host: mariadb
+       PWE_CONF_dbi_db1_port: 3306
+       PWE_CONF_dbi_db1_dbname: pwe
+       PWE_CONF_dbi_db1_user: pwe
+       PWE_CONF_dbi_db1_pass: pwe
+       PWE_CONF_pwe_home: "/PWE/examples/generic_web"
    nginx:
      image: kukam/pwe-nginx
      restart: always
@@ -51,7 +51,7 @@ services:
      ports:
        - "7778:80"       
      environment:
-       PWE_CONF_home: "/PWE/examples/generic_web"
+       PWE_CONF_pwe_home: "/PWE/examples/generic_web"
 volumes:
     source:
     nginx:
