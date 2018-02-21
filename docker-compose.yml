@@ -40,6 +40,7 @@ services:
        PWE_CONF_dbi_db1_user: pwe
        PWE_CONF_dbi_db1_pass: pwe
        PWE_CONF_pwe_home: "/PWE/examples/generic_web"
+       PWE_CONF_log_logout: "STDERR"
    nginx:
      image: kukam/pwe-nginx
      restart: always
