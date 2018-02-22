@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
    pwe:
@@ -18,13 +18,17 @@ services:
        MYSQL_USER_PWD: pwe
    fastcgi:
      image: kukam/pwe-fastcgi
-     restart: always
+     restart: unless-stopped
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: on-failure
+         delay: 5s
+         window: 120s
      volumes:
        - source:/PWE
        #- source:/PWE:ro
        #- project:/PWE/webapps/mydomain.ltd/ # Uncoment te path to your owner project
-     deploy:
-       replicas: 1
      ports:
        - "7779:7779"
      #working_dir: /PWE/examples/generic_web/ # Set te path to your owner project
@@ -32,6 +36,9 @@ services:
      #  - ./pwe.fcgi
      stdin_open: true
      tty: true
+     depends_on:
+       - "mariadb"
+       - "pwe"
      environment:
        FCGI_SOCKET_PATH: :7779
        PWE_CONF_dbi_db1_host: mariadb
@@ -50,7 +57,11 @@ services:
        - source:/PWE:ro
        #- project:/PWE/webapps/mydomain.ltd/:ro # Uncoment te path to your owner project
      ports:
-       - "7778:80"       
+       - "7778:80"
+     depends_on:
+       - "mariadb"
+       - "fastcgi"
+       - "pwe"
      environment:
        PWE_CONF_pwe_home: "/PWE/examples/generic_web/"
 volumes:
