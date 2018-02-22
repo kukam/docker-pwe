@@ -22,12 +22,12 @@ services:
      volumes:
        - source:/PWE
        #- source:/PWE:ro
-       #- project:/PWE/webapps/mydomain.ltd # Uncoment te path to your owner project
+       #- project:/PWE/webapps/mydomain.ltd/ # Uncoment te path to your owner project
      deploy:
        replicas: 1
      ports:
        - "7779:7779"
-     #working_dir: /PWE/examples/generic_web # Set te path to your owner project
+     #working_dir: /PWE/examples/generic_web/ # Set te path to your owner project
      #command:
      #  - ./pwe.fcgi
      stdin_open: true
@@ -39,7 +39,7 @@ services:
        PWE_CONF_dbi_db1_dbname: pwe
        PWE_CONF_dbi_db1_user: pwe
        PWE_CONF_dbi_db1_pass: pwe
-       PWE_CONF_pwe_home: "/PWE/examples/generic_web"
+       PWE_CONF_pwe_home: "/PWE/examples/generic_web/"
        PWE_CONF_log_logout: "STDERR"
    nginx:
      image: kukam/pwe-nginx
@@ -48,11 +48,11 @@ services:
      tty: true
      volumes:
        - source:/PWE:ro
-       #- project:/PWE/webapps/mydomain.ltd:ro # Uncoment te path to your owner project
+       #- project:/PWE/webapps/mydomain.ltd/:ro # Uncoment te path to your owner project
      ports:
        - "7778:80"       
      environment:
-       PWE_CONF_pwe_home: "/PWE/examples/generic_web"
+       PWE_CONF_pwe_home: "/PWE/examples/generic_web/"
 volumes:
     source:
     nginx:
