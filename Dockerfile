@@ -5,6 +5,6 @@ MAINTAINER kukam <kukam@freebox.cz>
 RUN apk --no-cache --update add git bash && \
   git clone https://github.com/kukam/PWE.git /PWE.git
 
-#VOLUME /PWE
+VOLUME /PWE
 
 CMD cp -r /PWE.git/* /PWE
