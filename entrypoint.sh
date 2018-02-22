@@ -6,4 +6,4 @@ if [ ! -d "/PWE/.git" ]; then
     git reset --hard HEAD
 fi
 
-exec git pull
+git pull
