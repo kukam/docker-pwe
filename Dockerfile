@@ -10,7 +10,7 @@ RUN chmod +x /entrypoint.sh
 
 VOLUME /PWE
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT /entrypoint.sh
 
 #CMD cp -r /PWE.git/* /PWE
 #CMD git clone https://github.com/kukam/PWE /PWE
