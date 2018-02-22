@@ -9,6 +9,7 @@ COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 VOLUME /PWE
+WORKDIR /PWE
 
 ENTRYPOINT /entrypoint.sh
 
