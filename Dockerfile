@@ -7,4 +7,4 @@ RUN apk --no-cache --update add git bash && \
 
 #VOLUME /PWE
 
-CMD ["cp", "-r", "/PWE.git/*", "/PWE"]
+CMD cp -r /PWE.git/* /PWE
