@@ -1,6 +1,6 @@
-/bin/sh
+#/bin/sh
 
-if [ ! -d .git ]; then
+if [ ! -d "/PWE/.git" ]; then
     cp -r /PWE.temp/.git /PWE
     cd /PWE
     git reset --hard HEAD
