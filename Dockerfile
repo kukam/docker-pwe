@@ -12,7 +12,3 @@ VOLUME /PWE
 WORKDIR /PWE
 
 ENTRYPOINT /entrypoint.sh
-
-#CMD cp -r /PWE.git/* /PWE
-#CMD git clone https://github.com/kukam/PWE /PWE
-#CMD git pull
