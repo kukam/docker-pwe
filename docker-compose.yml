@@ -5,6 +5,9 @@ services:
      image: kukam/pwe
      volumes:
        - source:/PWE
+       - project:/PWE/examples/generic_web
+       #- project:/PWE/examples/static_web
+       #- project:/PWE/webapps/mydomain.ltd # Set the path to your owner project and remove bind generic_web and static_web.
      restart: on-failure
    mariadb:
      image: kukam/pwe-mariadb
@@ -18,6 +21,7 @@ services:
        MYSQL_USER_PWD: pwe
    fastcgi:
      image: kukam/pwe-fastcgi
+     container_name: fastcgi
      restart: unless-stopped
      deploy:
        replicas: 1
@@ -27,13 +31,10 @@ services:
          window: 120s
      volumes:
        - source:/PWE
-       #- source:/PWE:ro
-       #- project:/PWE/webapps/mydomain.ltd/ # Uncoment te path to your owner project
+       - project:/PWE/webapps/mydomain.ltd # # Set the path to your owner project
      ports:
        - "7779:7779"
-     #working_dir: /PWE/examples/generic_web/ # Set te path to your owner project
-     #command:
-     #  - ./pwe.fcgi
+     working_dir: /PWE/webapps/mydomain.ltd # Set the path to your owner project
      stdin_open: true
      tty: true
      depends_on:
@@ -41,29 +42,32 @@ services:
        - "pwe"
      environment:
        FCGI_SOCKET_PATH: :7779
-       PWE_CONF_dbi_db1_host: mariadb
-       PWE_CONF_dbi_db1_port: 3306
-       PWE_CONF_dbi_db1_dbname: pwe
-       PWE_CONF_dbi_db1_user: pwe
-       PWE_CONF_dbi_db1_pass: pwe
-       PWE_CONF_pwe_home: "/PWE/examples/generic_web/"
-       PWE_CONF_log_logout: "STDERR"
+       PWE-CONF-pwe-home: "/PWE/webapps/mydomain.ltd/" # Set the path to your owner project
+       PWE-CONF-dbi-db1-host: mariadb
+       PWE-CONF-dbi-db1-port: 3306
+       PWE-CONF-dbi-db1-dbname: pwe
+       PWE-CONF-dbi-db1-user: pwe
+       PWE-CONF-dbi-db1-pass: pwe
+       PWE-CONF-log-logout: "STDERR"
+       PWE-CONF-log-loglevel: 1
+       PWE-CONF-log-log_delay: 1
+       PWE-CONF-log-log_delay_minimum: "0.1"
    nginx:
      image: kukam/pwe-nginx
      restart: always
      stdin_open: true
      tty: true
+     links:
+       - fastcgi:fastcgi
      volumes:
-       - source:/PWE:ro
-       #- project:/PWE/webapps/mydomain.ltd/:ro # Uncoment te path to your owner project
+       - source:/PWE
+       - project:/PWE/webapps/nginx/:ro
      ports:
        - "7778:80"
      depends_on:
        - "mariadb"
        - "fastcgi"
        - "pwe"
-     environment:
-       PWE_CONF_pwe_home: "/PWE/examples/generic_web/"
 volumes:
     source:
     nginx:
