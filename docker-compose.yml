@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3'
 
 services:
    pwe:
@@ -19,15 +19,24 @@ services:
        MYSQL_USER_DB: pwe
        MYSQL_USER: pwe
        MYSQL_USER_PWD: pwe
+   postgresdb:
+     image: kukam/pwe-postgres
+     restart: unless-stopped
+     volumes:
+       - postgresdb:/var/lib/postgresql
+     environment:
+       POSTGRES_ADMIN_PASS: root123
+       POSTGRES_USER_DB: pwe
+       POSTGRES_USER: pwe
+       POSTGRES_USER_PASS: pwe
    fastcgi:
      image: kukam/pwe-fastcgi
      container_name: fastcgi
      restart: unless-stopped
      volumes:
        - source:/PWE
-       - project:/PWE/webapps/mydomain.ltd # # Set the path to your owner project
-     ports:
-       - "7779:7779"
+       - project:/PWE/webapps/mydomain.ltd # Set the path to your owner project
+       - uploadfile:/PWE/webapps/mydomain.ltd/uploadfile # Set the path to your owner project
      working_dir: /PWE/webapps/mydomain.ltd # Set the path to your owner project
      stdin_open: true
      tty: true
@@ -36,7 +45,10 @@ services:
        - "pwe"
      environment:
        FCGI_SOCKET_PATH: :7779
+       PWE-CONF-pwe-save_opt_to: "db"
        PWE-CONF-pwe-home: "/PWE/webapps/mydomain.ltd/" # Set the path to your owner project
+       PWE-CONF-pwe-upload_dir: "uploadfile/"
+       PWE-CONF-pwe-opts_dir: "sessions/"
        PWE-CONF-dbi-db1-host: mariadb
        PWE-CONF-dbi-db1-port: 3306
        PWE-CONF-dbi-db1-dbname: pwe
@@ -51,11 +63,10 @@ services:
      restart: unless-stopped
      stdin_open: true
      tty: true
-     links:
-       - fastcgi:fastcgi
      volumes:
        - source:/PWE
-       - project:/PWE/webapps/nginx/:ro
+       - project:/PWE/webapps/nginx/
+       - uploadfile:/PWE/webapps/nginx/uploadfile
      ports:
        - "7778:80"
      depends_on:
@@ -63,7 +74,8 @@ services:
        - "fastcgi"
        - "pwe"
 volumes:
-    source:
-    nginx:
-    mariadb:
-    project:
+    source: 		# PWE core code
+    mariadb:		# Mariadb volume
+    postgresdb:		# Postgresdb volume
+    project:		# My webpage
+    uploadfile:		# Uploadfile
