@@ -65,7 +65,7 @@ services:
      tty: true
      volumes:
        - source:/PWE
-       - project:/PWE/webapps/nginx/
+       - project:/PWE/webapps/nginx
        - uploadfile:/PWE/webapps/nginx/uploadfile
      ports:
        - "7778:80"
