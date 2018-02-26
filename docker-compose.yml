@@ -20,7 +20,7 @@ services:
        MYSQL_USER: pwe
        MYSQL_USER_PWD: pwe
    postgresdb:
-     image: kukam/pwe-postgres
+     image: kukam/pwe-postgresdb
      restart: unless-stopped
      volumes:
        - postgresdb:/var/lib/postgresql
