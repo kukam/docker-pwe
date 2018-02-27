@@ -5,7 +5,7 @@
     "description": "Docker image PWE (Perl Web Engine)",
     "categories": ["docker"],
     "platform": "linux",
-    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/PERL.png",
+    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
     "image": "kukam/pwe:latest",
     "volumes": ["/PWE"]
   },
@@ -16,7 +16,7 @@
     "note": "Deploys a PWE instance connected to a MySQL database.",
     "categories": ["CMS"],
     "platform": "linux",
-    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/PERL.png",
+    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
     "repository": {
       "url": "https://github.com/kukam/docker-pwe",
       "stackfile": "docker-compose.yml"
