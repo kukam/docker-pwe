@@ -51,19 +51,21 @@ services:
        PWE_CONF_pwe_home: /PWE/webapps/mydomain.ltd/ # Set the path to your owner project
        PWE_CONF_pwe_upload_dir: uploadfile/
        PWE_CONF_pwe_opts_dir: sessions/
-       PWE_CONF_pwe_db1_dbdriver: MySQL
-       PWE_CONF_dbi_db1_host: mariadb
-       PWE_CONF_dbi_db1_port: 3306
-       PWE_CONF_dbi_db1_database: pwe
-       PWE_CONF_dbi_db1_login: pwe
-       PWE_CONF_dbi_db1_password: pwe
-       #PWE_CONF_dbi_db1_dbdriver: Postgres
-       #PWE_CONF_dbi_db1_host: postgresdb
-       #PWE_CONF_dbi_db1_port: 5432
-       #PWE_CONF_dbi_db1_schema: public
+       #PWE_CONF_pwe_db1_dbdriver: MySQL
+       #PWE_CONF_dbi_db1_host: mariadb
+       #PWE_CONF_dbi_db1_port: 3306
        #PWE_CONF_dbi_db1_database: pwe
        #PWE_CONF_dbi_db1_login: pwe
        #PWE_CONF_dbi_db1_password: pwe
+       #PWE_CONF_dbi_db1_dbversion_file: conf/mysql_dbversion.pl
+       PWE_CONF_dbi_db1_dbdriver: Postgres
+       PWE_CONF_dbi_db1_host: postgresdb
+       PWE_CONF_dbi_db1_port: 5432
+       PWE_CONF_dbi_db1_schema: public
+       PWE_CONF_dbi_db1_database: pwe
+       PWE_CONF_dbi_db1_login: pwe
+       PWE_CONF_dbi_db1_password: pwe
+       PWE_CONF_dbi_db1_dbversion_file: conf/postgres_dbversion.pl
        PWE_CONF_log_logout: STDERR
        PWE_CONF_log_loglevel: 3
        PWE_CONF_log_log_delay: 1
