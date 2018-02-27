@@ -18,8 +18,8 @@
     "platform": "linux",
     "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/PERL.gif",
     "repository": {
-      "url": "https://github.com/portainer/templates",
-      "stackfile": "stacks/wordpress/docker-stack.yml"
+      "url": "https://raw.githubusercontent.com/kukam/docker-pwe/master/",
+      "stackfile": "docker-composer.yml"
     },
     "env": [
       {
