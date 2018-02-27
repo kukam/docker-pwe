@@ -1,0 +1,32 @@
+[
+  {
+    "type": "container",
+    "title": "PWE container",
+    "description": "Docker image PWE (Perl Web Engine)",
+    "categories": ["docker"],
+    "platform": "linux",
+    "logo": "https://cloudinovasi.id/assets/img/logos/registry.png",
+    "image": "kukam/pwe:latest",
+    "volumes": ["/PWE"]
+  },
+  {
+    "type": "stack",
+    "title": "PWE stack",
+    "description": "PWE setup with a MySQL database",
+    "note": "Deploys a PWE instance connected to a MySQL database.",
+    "categories": ["CMS"],
+    "platform": "linux",
+    "logo": "https://cloudinovasi.id/assets/img/logos/wordpress.png",
+    "repository": {
+      "url": "https://github.com/portainer/templates",
+      "stackfile": "stacks/wordpress/docker-stack.yml"
+    },
+    "env": [
+      {
+        "name": "MYSQL_ROOT_PASSWORD",
+        "label": "Database root password",
+        "description": "Password used by the MySQL root user."
+      }
+    ]
+  }
+]
