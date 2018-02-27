@@ -23,7 +23,7 @@ services:
      image: kukam/pwe-postgresdb
      restart: unless-stopped
      volumes:
-       - postgresdb:/var/lib/postgresql
+       - postgresdb:/var/lib/postgresql/data
      environment:
        POSTGRES_ADMIN_PASS: root123
        POSTGRES_USER_DB: pwe
