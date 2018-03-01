@@ -1,10 +1,5 @@
 version: '3'
 
-# Todle v dokumentaci neni...
-#services:
-#   fastcgi:
-#     working_dir: path/
-
 services:
    pwe:
      image: kukam/pwe
