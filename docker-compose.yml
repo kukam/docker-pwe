@@ -42,6 +42,7 @@ services:
      volumes:
        - source:/PWE
        - project:/PWE/webapps/myproject
+       - uploadfile:/PWE/webapps/myproject/uploadfile
      stdin_open: true
      tty: true
      environment:
