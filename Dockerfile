@@ -13,4 +13,5 @@ WORKDIR /PWE
 
 #ENTRYPOINT /entrypoint.sh
 
-CMD ["svn", "co", "https://github.com/kukam/PWE/trunk", "./"]
+#CMD ["svn", "co", "https://github.com/kukam/PWE/trunk", "./"]
+CMD if [[ -d .svn ]]; then svn up; else svn co https://svn.freebox.cz/PWE/trunk ./; fi
