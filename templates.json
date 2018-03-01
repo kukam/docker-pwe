@@ -8,5 +8,17 @@
     "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
     "image": "kukam/pwe:latest",
     "volumes": ["/PWE"]
-  }
+  },
+  {
+    "type": "stack",
+    "title": "PWE stack",
+    "description": "PWE setup with a MySQL or Postgres database",
+    "note": "Deploys a PWE instance connected to a MySQL or Postgres database.",
+    "categories": ["CMS"],
+    "platform": "linux",
+    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
+    "repository": {
+      "url": "https://github.com/kukam/docker-pwe",
+      "stackfile": "docker-compose.yml"
+    }
 ]
