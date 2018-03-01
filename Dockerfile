@@ -12,3 +12,5 @@ VOLUME /PWE
 WORKDIR /PWE
 
 ENTRYPOINT /entrypoint.sh
+
+CMD ["svn", "co", "https://github.com/kukam/PWE", "./"]
