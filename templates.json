@@ -8,37 +8,5 @@
     "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
     "image": "kukam/pwe:latest",
     "volumes": ["/PWE"]
-  },
-  {
-    "type": "stack",
-    "title": "PWE stack",
-    "description": "PWE setup with a MySQL or Postgres database",
-    "note": "Deploys a PWE instance connected to a MySQL or Postgres database.",
-    "categories": ["CMS"],
-    "platform": "linux",
-    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
-    "repository": {
-      "url": "https://github.com/kukam/docker-pwe",
-      "stackfile": "docker-compose.yml"
-    },
-    "env": [
-      {
-        "name": "DB_ADMIN_PWD",
-        "label": "Database admin password",
-        "description": "Password admin"
-      },
-      {
-        "name": "DB_USER_DB",
-        "label": "Database name"
-      },
-      {
-        "name": "DB_USER",
-        "label": "Database user name"
-      },
-      {
-        "name": "DB_USER_PWD",
-        "label": "Database user password"
-      }    
-    ]
   }
 ]
