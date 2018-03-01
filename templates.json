@@ -26,21 +26,6 @@
         "name": "DB_ADMIN_PWD",
         "label": "Database admin password",
         "description": "Password admin"
-      },
-      {
-        "name": "DB_USER_DB",
-        "label": "Database name",
-        "description": "Password admin"
-      },
-      {
-        "name": "DB_USER",
-        "label": "Database user name",
-        "description": "Password admin"
-      },
-      {
-        "name": "DB_USER_PWD",
-        "label": "Database user password",
-        "description": "Password admin"
       }
     ]
   }
