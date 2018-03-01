@@ -1,13 +1,20 @@
 version: '3'
 
+# Todle v dokumentaci neni...
+#services:
+#   fastcgi:
+#     working_dir: path/
+
 services:
    pwe:
      image: kukam/pwe
      volumes:
        - source:/PWE
-       - project:/PWE/examples/generic_web
-       #- project:/PWE/examples/static_web
-       #- project:/PWE/webapps/mydomain.ltd # Set the path to your owner project and remove bind generic_web and static_web.
+     restart: on-failure
+   pwe-myproject:
+     image: kukam/pwe-myproject
+     volumes:
+       - project:/PWE/webapps/myproject
      restart: on-failure
    mariadb:
      image: kukam/pwe-mariadb
@@ -15,57 +22,42 @@ services:
      volumes:
        - mariadb:/var/lib/mysql
      environment:
-       MYSQL_ROOT_PWD: root123
-       MYSQL_USER_DB: pwe
-       MYSQL_USER: pwe
-       MYSQL_USER_PWD: pwe
+       MYSQL_ADMIN_PWD: ${DB_ADMIN_PWD:-root123}
+       MYSQL_USER_DB: ${DB_USER_DB:-pwe}
+       MYSQL_USER: ${DB_USER:-pwe}
+       MYSQL_USER_PWD: ${DB_USER_PWD:-pwe}
    postgresdb:
      image: kukam/pwe-postgresdb
      restart: unless-stopped
      volumes:
        - postgresdb:/var/lib/postgresql/data
      environment:
-       POSTGRES_ADMIN_PASS: root123
-       POSTGRES_USER_DB: pwe
-       POSTGRES_USER: pwe
-       POSTGRES_USER_PASS: pwe
+       POSTGRES_ADMIN_PWD: ${DB_ADMIN_PWD:-root123}
+       POSTGRES_USER_DB: ${DB_USER_DB:-pwe}
+       POSTGRES_USER: ${DB_USER:-pwe}
+       POSTGRES_USER_PWD: ${DB_USER_PWD:-pwe}
    fastcgi:
      image: kukam/pwe-fastcgi
-     container_name: fastcgi
      restart: unless-stopped
      volumes:
        - source:/PWE
-       - project:/PWE/webapps/mydomain.ltd # Set the path to your owner project
-       - uploadfile:/PWE/webapps/mydomain.ltd/uploadfile # Set the path to your owner project
-     working_dir: /PWE/webapps/mydomain.ltd # Set the path to your owner project
+       - project:/PWE/webapps/myproject
      stdin_open: true
      tty: true
-     depends_on:
-       - "mariadb"
-       - "pwe"
-     #command:
-     #  - top
      environment:
        FCGI_SOCKET_PATH: :7779
        PWE_CONF_pwe_save_opt_to: db
-       PWE_CONF_pwe_home: /PWE/webapps/mydomain.ltd/ # Set the path to your owner project
+       PWE_CONF_pwe_home: /PWE/webapps/myproject
        PWE_CONF_pwe_upload_dir: uploadfile/
        PWE_CONF_pwe_opts_dir: sessions/
-       #PWE_CONF_pwe_db1_dbdriver: MySQL
-       #PWE_CONF_dbi_db1_host: mariadb
-       #PWE_CONF_dbi_db1_port: 3306
-       #PWE_CONF_dbi_db1_database: pwe
-       #PWE_CONF_dbi_db1_login: pwe
-       #PWE_CONF_dbi_db1_password: pwe
-       #PWE_CONF_dbi_db1_dbversion_file: conf/mysql_dbversion.pl
-       PWE_CONF_dbi_db1_dbdriver: Postgres
-       PWE_CONF_dbi_db1_host: postgresdb
-       PWE_CONF_dbi_db1_port: 5432
+       PWE_CONF_dbi_db1_dbdriver: ${PWE_DB_DRIVER:-MySQL}
+       PWE_CONF_dbi_db1_host: ${PWE_DB_HOST:-mariadb}
+       PWE_CONF_dbi_db1_port: ${PWE_DB_PORT:-3306}
        PWE_CONF_dbi_db1_schema: public
-       PWE_CONF_dbi_db1_database: pwe
-       PWE_CONF_dbi_db1_login: pwe
-       PWE_CONF_dbi_db1_password: pwe
-       PWE_CONF_dbi_db1_dbversion_file: conf/postgres_dbversion.pl
+       PWE_CONF_dbi_db1_database: ${DB_USER_DB:-pwe}
+       PWE_CONF_dbi_db1_login: ${DB_USER:-pwe}
+       PWE_CONF_dbi_db1_password: ${DB_USER_PWD:-pwe}
+       PWE_CONF_dbi_db1_dbversion_file: ${PWE_DB_DBVERSION:-conf/mysql_dbversion.pl}
        PWE_CONF_log_logout: STDERR
        PWE_CONF_log_loglevel: 3
        PWE_CONF_log_log_delay: 1
@@ -75,18 +67,12 @@ services:
      restart: unless-stopped
      stdin_open: true
      tty: true
-     links:
-       - fastcgi
      volumes:
        - source:/PWE
-       - project:/PWE/webapps/nginx
-       - uploadfile:/PWE/webapps/nginx/uploadfile
+       - project:/PWE/webapps/myproject
+       - uploadfile:/PWE/webapps/myproject/uploadfile
      ports:
        - "7778:80"
-     depends_on:
-       - "mariadb"
-       - "fastcgi"
-       - "pwe"
 volumes:
     source: 		# PWE core code
     mariadb:		# Mariadb volume
