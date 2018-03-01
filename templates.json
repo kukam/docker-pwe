@@ -12,8 +12,8 @@
   {
     "type": "stack",
     "title": "PWE stack",
-    "description": "PWE setup with a MySQL database",
-    "note": "Deploys a PWE instance connected to a MySQL database.",
+    "description": "PWE setup with a MySQL or Postgres database",
+    "note": "Deploys a PWE instance connected to a MySQL or Postgres database.",
     "categories": ["CMS"],
     "platform": "linux",
     "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
@@ -38,7 +38,7 @@
       {
         "name": "DB_USER_PWD",
         "label": "Database user password",
-      },
+      }
     ]
   }
 ]
