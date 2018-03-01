@@ -29,15 +29,15 @@
       },
       {
         "name": "DB_USER_DB",
-        "label": "Database name",
+        "label": "Database name"
       },
       {
         "name": "DB_USER",
-        "label": "Database user name",
+        "label": "Database user name"
       },
       {
         "name": "DB_USER_PWD",
-        "label": "Database user password",
+        "label": "Database user password"
       }
     ]
   }
