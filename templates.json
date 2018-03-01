@@ -9,6 +9,16 @@
     "image": "kukam/pwe:latest",
     "volumes": ["/PWE"]
   },
+    {
+    "type": "container",
+    "title": "PWE container3",
+    "description": "Docker image PWE (Perl Web Engine)",
+    "categories": ["docker"],
+    "platform": "linux",
+    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
+    "image": "kukam/pwe:latest",
+    "volumes": ["/PWE"]
+  },
   {
     "type": "stack",
     "title": "PWE stack",
