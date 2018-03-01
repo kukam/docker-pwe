@@ -23,10 +23,22 @@
     },
     "env": [
       {
-        "name": "MYSQL_ROOT_PASSWORD",
-        "label": "Database root password",
-        "description": "Password used by the MySQL root user."
-      }
+        "name": "DB_ADMIN_PWD",
+        "label": "Database admin password",
+        "description": "Password admin"
+      },
+      {
+        "name": "DB_USER_DB",
+        "label": "Database name",
+      },
+      {
+        "name": "DB_USER",
+        "label": "Database user name",
+      },
+      {
+        "name": "DB_USER_PWD",
+        "label": "Database user password",
+      },
     ]
   }
 ]
