@@ -69,6 +69,17 @@ services:
        - uploadfile:/PWE/webapps/myproject/uploadfile
      ports:
        - "7778:80"
+   apache:
+     image: kukam/pwe-apache
+     restart: unless-stopped
+     stdin_open: true
+     tty: true
+     volumes:
+       - source:/PWE
+       - project:/PWE/webapps/myproject
+       - uploadfile:/PWE/webapps/myproject/uploadfile
+     ports:
+       - "7777:80"
 volumes:
     source: 		# PWE core code
     mariadb:		# Mariadb volume
