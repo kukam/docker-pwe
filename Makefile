@@ -1,2 +1,2 @@
 build:
-	docker build -t kukam/docker-pwe .
+	docker build -t kukam/pwe .
