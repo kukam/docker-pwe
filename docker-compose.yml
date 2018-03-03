@@ -14,8 +14,10 @@ services:
    database:
      image: kukam/pwe-${DB_DRIVER:-maria}
      restart: unless-stopped
+     command:
+       - top
      volumes:
-       - ${DB_DRIVER:-maria}:/var/lib/mysql
+       - ${DB_DRIVER:-maria}:/dbhome
      environment:
        DB_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-root123}
        DB_NAME: ${DB_NAME:-pwe}
@@ -61,7 +63,7 @@ services:
        - "7778:80"
 volumes:
     source: 		# PWE core code
-    maria:		# Maria volume
+    maria:			# Maria volume
     postgres:		# Postgres volume
     project:		# My webpage
     uploadfile:		# Uploadfile
