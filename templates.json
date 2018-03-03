@@ -23,12 +23,16 @@
     },
     "env": [
       {
-        "name": "DB_ADMIN_PWD",
-        "label": "Database admin password",
-        "description": "Password admin"
+        "name": "DATABASE",
+        "label": "Database driver",
+        "description": "Use only maria or postgres value!"
       },
       {
-        "name": "DB_USER_DB",
+        "name": "DB_ADMIN_PASSWORD",
+        "label": "Database admin password",
+      },
+      {
+        "name": "DB_NAME",
         "label": "Database name"
       },
       {
@@ -36,7 +40,7 @@
         "label": "Database user name"
       },
       {
-        "name": "DB_USER_PWD",
+        "name": "DB_USER_PASSWORD",
         "label": "Database user password"
       }    
     ]
