@@ -14,8 +14,6 @@ services:
    database:
      image: kukam/pwe-${DB_DRIVER:-maria}
      restart: unless-stopped
-     command:
-       - top
      volumes:
        - ${DB_DRIVER:-maria}:/dbhome
      environment:
