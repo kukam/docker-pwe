@@ -11,26 +11,16 @@ services:
      volumes:
        - project:/PWE/webapps/myproject
      restart: on-failure
-   mariadb:
-     image: kukam/pwe-mariadb
+   database:
+     image: kukam/pwe-${DATABASE:-maria}
      restart: unless-stopped
      volumes:
-       - mariadb:/var/lib/mysql
+       - ${DATABASE:-maria}:/var/lib/mysql
      environment:
-       MYSQL_ADMIN_PWD: ${DB_ADMIN_PWD:-root123}
-       MYSQL_USER_DB: ${DB_USER_DB:-pwe}
-       MYSQL_USER: ${DB_USER:-pwe}
-       MYSQL_USER_PWD: ${DB_USER_PWD:-pwe}
-   postgresdb:
-     image: kukam/pwe-postgresdb
-     restart: unless-stopped
-     volumes:
-       - postgresdb:/var/lib/postgresql/data
-     environment:
-       POSTGRES_ADMIN_PWD: ${DB_ADMIN_PWD:-root123}
-       POSTGRES_USER_DB: ${DB_USER_DB:-pwe}
-       POSTGRES_USER: ${DB_USER:-pwe}
-       POSTGRES_USER_PWD: ${DB_USER_PWD:-pwe}
+       DB_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-root123}
+       DB_NAME: ${DB_NAME:-pwe}
+       DB_USER: ${DB_USER:-pwe}
+       DB_USER_PASSWORD: ${DB_USER_PASSWORD:-pwe}
    fastcgi:
      image: kukam/pwe-fastcgi
      restart: unless-stopped
@@ -46,20 +36,20 @@ services:
        PWE_CONF_pwe_home: /PWE/webapps/myproject/
        PWE_CONF_pwe_upload_dir: uploadfile/
        PWE_CONF_pwe_opts_dir: sessions/
-       PWE_CONF_dbi_db1_dbdriver: ${PWE_DB_DRIVER:-maria}
-       PWE_CONF_dbi_db1_host: ${PWE_DB_HOST:-mariadb}
-       PWE_CONF_dbi_db1_port: ${PWE_DB_PORT:-3306}
+       PWE_CONF_dbi_db1_dbdriver: ${DATABASE:-maria}
+       PWE_CONF_dbi_db1_host: database
+       PWE_CONF_dbi_db1_port: 7775
        PWE_CONF_dbi_db1_schema: public
-       PWE_CONF_dbi_db1_database: ${DB_USER_DB:-pwe}
+       PWE_CONF_dbi_db1_database: ${DB_NAME:-pwe}
        PWE_CONF_dbi_db1_login: ${DB_USER:-pwe}
-       PWE_CONF_dbi_db1_password: ${DB_USER_PWD:-pwe}
-       PWE_CONF_dbi_db1_dbversion_file: ${PWE_DB_DBVERSION:-conf/maria_dbversion.pl}
+       PWE_CONF_dbi_db1_password: ${DB_USER_PASSWORD:-pwe}
+       PWE_CONF_dbi_db1_dbversion_file: conf/${DATABASE:-maria}_dbversion.pl
        PWE_CONF_log_logout: STDERR
        PWE_CONF_log_loglevel: 3
        PWE_CONF_log_log_delay: 1
        PWE_CONF_log_log_delay_minimum: 0.1
-   nginx:
-     image: kukam/pwe-nginx
+   webproxy:
+     image: kukam/pwe-${WEBSERVER_NAME:-nginx}
      restart: unless-stopped
      stdin_open: true
      tty: true
@@ -69,20 +59,9 @@ services:
        - uploadfile:/PWE/webapps/myproject/uploadfile
      ports:
        - "7778:80"
-   apache:
-     image: kukam/pwe-apache
-     restart: unless-stopped
-     stdin_open: true
-     tty: true
-     volumes:
-       - source:/PWE
-       - project:/PWE/webapps/myproject
-       - uploadfile:/PWE/webapps/myproject/uploadfile
-     ports:
-       - "7777:80"
 volumes:
     source: 		# PWE core code
-    mariadb:		# Mariadb volume
-    postgresdb:		# Postgresdb volume
+    maria:		# Maria volume
+    postgres:		# Postgres volume
     project:		# My webpage
     uploadfile:		# Uploadfile
