@@ -23,7 +23,7 @@
     },
     "env": [
       {
-        "name": "DATABASE",
+        "name": "DB_DRIVER",
         "label": "Database driver",
         "description": "Use only maria or postgres value!"
       },
