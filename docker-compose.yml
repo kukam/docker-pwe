@@ -16,7 +16,7 @@ services:
        DB_USER: ${DB_USER:-pwe}
        DB_USER_PASSWORD: ${DB_USER_PASSWORD:-pwe}
    pwe:
-     image: kukam/PWE
+     image: kukam/pwe
      restart: unless-stopped
      volumes:
        - PWE:/PWE
