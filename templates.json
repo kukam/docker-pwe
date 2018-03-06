@@ -1,12 +1,12 @@
 [
   {
     "type": "container",
-    "title": "PWE fastcgi",
-    "description": "PWE fastcgi",
+    "title": "PWE",
+    "description": "PWE",
     "categories": ["docker"],
     "platform": "linux",
     "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
-    "image": "kukam/pwe-fastcgi:latest",
+    "image": "kukam/PWE:latest",
     "volumes": ["/PWE"]
   },
   {
