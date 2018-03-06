@@ -27,7 +27,6 @@ services:
        MYPROJECT: "https://github.com/kukam/PWE/trunk/examples/generic_web"
        FCGI_SOCKET_PATH: :7779
        PWE_CONF_pwe_save_opt_to: db
-       PWE_CONF_pwe_home: /PWE/webapps/myproject/
        PWE_CONF_pwe_upload_dir: uploadfile/
        PWE_CONF_pwe_opts_dir: sessions/
        PWE_CONF_dbi_db1_dbdriver: ${DB_DRIVER:-maria}
