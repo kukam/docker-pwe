@@ -1,9 +1,17 @@
-#/bin/sh
+#!/bin/sh
 
-if [ ! -d ".git" ]; then
-    git clone https://github.com/kukam/PWE ./
-    #cp -r /PWE.temp/.git /PWE
+if [ -d "/PWE/.svn" ]; then
+    svn up /PWE
+else
+    svn co $PWESOURCE /PWE
 fi
 
-git reset --hard HEAD
-git pull
+if [ -d "/PWE/webapps/myproject/.svn" ]; then
+    svn up ./
+else
+    svn co $MYPROJECT /PWE/webapps/myproject
+fi
+
+cd /PWE/webapps/myproject
+
+exec "$@"
