@@ -14,4 +14,6 @@ fi
 
 cd /PWE/webapps/myproject
 
+export PWE_CONF_pwe_home="/PWE/webapps/myproject"
+
 exec "$@"
