@@ -15,8 +15,8 @@ services:
        DB_NAME: ${DB_NAME:-pwe}
        DB_USER: ${DB_USER:-pwe}
        DB_USER_PASSWORD: ${DB_USER_PASSWORD:-pwe}
-   fastcgi:
-     image: kukam/pwe-fastcgi
+   pwe:
+     image: kukam/PWE
      restart: unless-stopped
      volumes:
        - PWE:/PWE
