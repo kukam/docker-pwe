@@ -1,16 +1,6 @@
 version: '3'
 
 services:
-   pwe:
-     image: kukam/pwe
-     volumes:
-       - source:/PWE
-     restart: on-failure
-   pwe-myproject:
-     image: kukam/pwe-myproject
-     volumes:
-       - project:/PWE/webapps/myproject
-     restart: on-failure
    database:
      image: kukam/pwe-${DB_DRIVER:-maria}
      restart: unless-stopped
@@ -29,12 +19,12 @@ services:
      image: kukam/pwe-fastcgi
      restart: unless-stopped
      volumes:
-       - source:/PWE
-       - project:/PWE/webapps/myproject
-       - uploadfile:/PWE/webapps/myproject/uploadfile
+       - PWE:/PWE
      stdin_open: true
      tty: true
      environment:
+       PWESOURCE: "https://github.com/kukam/PWE/trunk"
+       MYPROJECT: "https://github.com/kukam/PWE/trunk/examples/generic_web"
        FCGI_SOCKET_PATH: :7779
        PWE_CONF_pwe_save_opt_to: db
        PWE_CONF_pwe_home: /PWE/webapps/myproject/
@@ -58,14 +48,10 @@ services:
      stdin_open: true
      tty: true
      volumes:
-       - source:/PWE
-       - project:/PWE/webapps/myproject
-       - uploadfile:/PWE/webapps/myproject/uploadfile
+       - PWE:/PWE
      ports:
        - "7778:80"
 volumes:
-    source: 		# PWE core code
+    PWE: 		   # SOURCE + MYPROJECT VOLUME
     maria:			# Maria volume
     postgres:		# Postgres volume
-    project:		# My webpage
-    uploadfile:		# Uploadfile
