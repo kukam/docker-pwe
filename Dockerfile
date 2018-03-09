@@ -21,15 +21,15 @@ RUN apk --update --no-cache add bash subversion wget make perl gcc musl-dev perl
 
 RUN svn co ${PWESOURCE} /PWE
 
-#COPY ./entrypoint.sh /entrypoint.sh
-#RUN chmod +x /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 7779
 
 VOLUME ${PWE_CONF_pwe_home}
 WORKDIR ${PWE_CONF_pwe_home}
 
-#ENTRYPOINT ["/entrypoint.sh"]
-ENTRYPOINT if [[ -d .svn ]]; then svn up; else svn co ${MYPROJECT} ${PWE_CONF_pwe_home} fi
+ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT if [[ -d .svn ]]; then svn up; else svn co ${MYPROJECT} ${PWE_CONF_pwe_home} fi
 
 CMD ["perl", "pwe.fcgi"]
