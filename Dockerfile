@@ -30,6 +30,5 @@ VOLUME ${PWE_CONF_pwe_home}
 WORKDIR ${PWE_CONF_pwe_home}
 
 ENTRYPOINT ["/entrypoint.sh"]
-#ENTRYPOINT if [[ -d .svn ]]; then svn up; else svn co ${MYPROJECT} ${PWE_CONF_pwe_home} fi
 
 CMD ["perl", "pwe.fcgi"]
