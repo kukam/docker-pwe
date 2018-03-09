@@ -2,6 +2,10 @@ FROM alpine:latest
 
 MAINTAINER kukam <kukam@freebox.cz>
 
+ENV PWESOURCE 'https://github.com/kukam/PWE/trunk'
+ENV MYPROJECT 'https://github.com/kukam/PWE/trunk/examples/generic_web'
+ENV PWE_CONF_pwe_home '/PWE/webapps/myproject'
+
 ADD https://raw.githubusercontent.com/miyagawa/cpanminus/master/cpanm /usr/local/bin/cpanm
 RUN chmod +x /usr/local/bin/cpanm
 
@@ -15,16 +19,17 @@ RUN apk --update --no-cache add bash subversion wget make perl gcc musl-dev perl
     && rm -fr ./cpanm /root/.cpanm \
     && rm -fr /var/cache/apk/*
 
+RUN svn co ${PWESOURCE} /PWE
+
+#COPY ./entrypoint.sh /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
+
 EXPOSE 7779
 
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+VOLUME ${PWE_CONF_pwe_home}
+WORKDIR ${PWE_CONF_pwe_home}
 
-ENV PWESOURCE 'https://github.com/kukam/PWE/trunk'
-ENV MYPROJECT 'https://github.com/kukam/PWE/trunk/examples/generic_web'
-
-VOLUME /PWE
-
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT if [[ -d .svn ]]; then svn up; else svn co ${MYPROJECT} ${PWE_CONF_pwe_home} fi
 
 CMD ["perl", "pwe.fcgi"]
