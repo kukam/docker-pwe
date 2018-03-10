@@ -19,7 +19,7 @@ RUN apk --update --no-cache add bash subversion wget make perl gcc musl-dev perl
     && rm -fr ./cpanm /root/.cpanm \
     && rm -fr /var/cache/apk/*
 
-RUN svn co ${PWESOURCE} /PWE
+RUN svn co ${PWESOURCE} /PWE && svn up /PWE
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
