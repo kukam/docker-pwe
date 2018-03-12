@@ -19,7 +19,7 @@ services:
      image: kukam/pwe
      restart: unless-stopped
      volumes:
-       - PWE:/PWE
+       - uploadfile:/PWE/webapps/myproject/uploadfile
      stdin_open: true
      tty: true
      environment:
@@ -46,11 +46,10 @@ services:
      restart: unless-stopped
      stdin_open: true
      tty: true
-     volumes:
-       - PWE:/PWE
      ports:
        - "7778:80"
 volumes:
-    PWE: 		   # SOURCE + MYPROJECT VOLUME
+    myproject:    # MYPROJECT VOLUME
+    uploadfile:   # folder for uploadfile
     maria:			# Maria volume
     postgres:		# Postgres volume
