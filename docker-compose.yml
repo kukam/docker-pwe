@@ -51,5 +51,5 @@ services:
 volumes:
     myproject:    # MYPROJECT VOLUME
     uploadfile:   # folder for uploadfile
-    maria:			# Maria volume
-    postgres:		# Postgres volume
+    maria:        # Maria volume
+    postgres:     # Postgres volume
