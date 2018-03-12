@@ -41,15 +41,15 @@
       },
       {
         "name": "DB_NAME",
-        "label": "Database name",
+        "label": "Database name"
       },
       {
         "name": "DB_USER",
-        "label": "Database user name",
+        "label": "Database user name"
       },
       {
         "name": "DB_USER_PASSWORD",
-        "label": "Database user password",
+        "label": "Database user password"
       }    
     ]
   }
