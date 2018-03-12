@@ -33,7 +33,7 @@
           "text": "Postgres",
           "value": "postgres"
         }
-        ],
+        ]
       },
       {
         "name": "DB_ADMIN_PASSWORD",
