@@ -1,8 +1,8 @@
 [
   {
     "type": "container",
-    "title": "PWE",
-    "description": "PWE",
+    "title": "PWE2",
+    "description": "PWE2",
     "categories": ["docker"],
     "platform": "linux",
     "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
