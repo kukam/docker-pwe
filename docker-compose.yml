@@ -19,6 +19,7 @@ services:
      image: kukam/pwe
      restart: unless-stopped
      volumes:
+       - myproject:/PWE/webapps/myproject
        - uploadfile:/PWE/webapps/myproject/uploadfile
      stdin_open: true
      tty: true
