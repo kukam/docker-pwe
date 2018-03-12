@@ -24,28 +24,32 @@
       {
         "name": "DB_DRIVER",
         "label": "Database driver",
-        "description": "Use only maria or postgres value!",
-        "set": "maria"
+        "select": [
+        {
+          "text": "MariaDB",
+          "value": "maria"
+        },
+        {
+          "text": "Postgres",
+          "value": "postgres"
+        }
+        ],
       },
       {
         "name": "DB_ADMIN_PASSWORD",
         "label": "Database admin password",
-        "set": "passwordadmin"
       },
       {
         "name": "DB_NAME",
         "label": "Database name",
-        "set": "pwedb"
       },
       {
         "name": "DB_USER",
         "label": "Database user name",
-        "set": "pweuser"
       },
       {
         "name": "DB_USER_PASSWORD",
         "label": "Database user password",
-        "set": "pwepassword"
       }    
     ]
   }
