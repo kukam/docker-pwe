@@ -40,6 +40,7 @@ services:
        PWE_CONF_dbi_db1_login: ${DB_USER:-pwe}
        PWE_CONF_dbi_db1_password: ${DB_USER_PASSWORD:-pwe}
        PWE_CONF_dbi_db1_dbversion_file: conf/${DB_DRIVER:-maria}_dbversion.pl
+       PWE_CONF_dbi_db1_trayconnect: 10
        PWE_CONF_log_logout: STDERR
        PWE_CONF_log_loglevel: 3
        PWE_CONF_log_log_delay: 1
