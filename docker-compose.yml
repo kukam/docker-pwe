@@ -6,6 +6,7 @@ services:
      restart: unless-stopped
      volumes:
        - ${DB_DRIVER:-maria}:/dbhome
+       - /etc/localtime:/etc/localtime:ro
      deploy:
        placement:
          constraints:
@@ -21,6 +22,7 @@ services:
      volumes:
        - myproject:/PWE/webapps/myproject
        - uploadfile:/PWE/webapps/myproject/uploadfile
+       - /etc/localtime:/etc/localtime:ro
      stdin_open: true
      tty: true
      environment:
@@ -52,6 +54,9 @@ services:
      tty: true
      ports:
        - "7778:80"
+     volumes:
+       - /etc/localtime:/etc/localtime:ro
+
 volumes:
     myproject:    # MYPROJECT VOLUME
     uploadfile:   # folder for uploadfile
