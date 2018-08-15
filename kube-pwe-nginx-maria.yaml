@@ -1,0 +1,224 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "pwe"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pwe-maria-svc
+  namespace: pwe
+spec:
+  ports:
+  - port: 7775
+  selector:
+    app: pwe-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pwe
+  namespace: pwe
+spec:
+  ports:
+  - port: 7779
+  selector:
+    app: pwe
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pwe-nginx-svc
+  namespace: pwe
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: pwe-webproxy
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pwe-db
+  name: pwe-db
+  namespace: pwe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pwe-db
+  template:
+    metadata:
+      labels:
+        app: pwe-db
+    spec:
+      containers:
+      - image: kukam/pwe-maria:latest
+        imagePullPolicy: Always
+        name: pwe-maria
+        env:
+        - name: DB_ADMIN_PASSWORD 
+          value: "root123"
+        - name: DB_NAME
+          value: "pwe"
+        - name: DB_USER
+          value: "pwe"
+        - name: DB_USER_PASSWORD
+          value: "pwe"
+        ports:
+        - containerPort: 7775
+          name: pwe-db
+        volumeMounts:
+        - name: maria-storage
+          mountPath: /dbhome
+      volumes:
+      - name: maria-storage
+        emptyDir: {}
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: pwe
+  name: pwe
+  namespace: pwe
+spec:
+  selector:
+    matchLabels:
+      app: pwe
+  template:
+    metadata:
+      labels:
+        app: pwe
+    spec:
+      containers:
+      - image: kukam/pwe:latest
+        imagePullPolicy: Always
+        name: pwe
+        env:
+        - name: PWESOURCE 
+          value: "https://github.com/kukam/PWE/trunk"
+        - name: MYPROJECT
+          value: "https://github.com/kukam/PWE/trunk/examples/generic_web"
+        - name: FCGI_SOCKET_PATH
+          value: ":7779"
+        - name: PWE_CONF_pwe_save_opt_to
+          value: "db"
+        - name: PWE_CONF_pwe_assets_dir
+          value: "assets, uploadfile/"
+        - name: PWE_CONF_pwe_upload_dir
+          value: "uploadfile/"
+        - name: PWE_CONF_pwe_assets_browse_dir
+          value: "uploadfile/"
+        - name: PWE_CONF_pwe_opts_dir
+          value: "sessions/"
+        - name: PWE_CONF_dbi_db1_dbdriver
+          value: "maria"
+        - name: PWE_CONF_dbi_db1_host
+          value: "pwe-maria-svc"
+        - name: PWE_CONF_dbi_db1_port
+          value: "7775"
+        - name: PWE_CONF_dbi_db1_schema
+          value: "public"
+        - name: PWE_CONF_dbi_db1_database
+          value: "pwe"
+        - name: PWE_CONF_dbi_db1_login
+          value: "pwe"
+        - name: PWE_CONF_dbi_db1_password
+          value: "pwe"
+        - name: PWE_CONF_dbi_db1_dbversion_file
+          value: "conf/maria_dbversion.pl"
+        - name: PWE_CONF_dbi_db1_trayconnect
+          value: "10"
+        - name: PWE_CONF_log_logout
+          value: "STDERR"
+        - name: PWE_CONF_log_loglevel
+          value: "3"
+        - name: PWE_CONF_log_log_delay
+          value: "1"
+        - name: PWE_CONF_log_log_delay_minimum
+          value: "0.1"
+        ports:
+        - containerPort: 7779
+          name: pwe
+        volumeMounts:
+        - name: pwe-project
+          mountPath: /PWE/webapps/myproject
+        - name: pwe-uploadfile
+          mountPath: /PWE/webapps/myproject/uploadfile
+      volumes:
+      - name: pwe-project
+        emptyDir: {}
+      - name: pwe-uploadfile
+        emptyDir: {}
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: pwe-webproxy
+  name: pwe-webproxy
+  namespace: pwe
+spec:
+  selector:
+    matchLabels:
+      app: pwe-webproxy
+  template:
+    metadata:
+      labels:
+        app: pwe-webproxy
+    spec:
+      containers:
+      - image: kukam/pwe-nginx:latest
+        imagePullPolicy: Always
+        name: pwe-nginx
+        ports:
+        - containerPort: 80
+          name: pwe-webproxy
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pwe-ingress
+  namespace: pwe
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - pwe.kube.freebox.cz
+    secretName: pwe-secret
+  rules:
+  - host: pwe.kube.freebox.cz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pwe-nginx-svc
+          servicePort: 80
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: pwe-certificate
+  namespace: pwe
+spec:
+  secretName: pwe-secret
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: pwe.kube.freebox.cz
+  dnsNames:
+  - pwe.kube.freebox.cz
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - pwe.kube.freebox.cz
