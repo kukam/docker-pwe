@@ -64,7 +64,6 @@ spec:
           value: "0.1"
         ports:
         - containerPort: 7779
-          name: pwe
         volumeMounts:
         - name: pwe-project
           mountPath: /PWE/webapps/myproject
