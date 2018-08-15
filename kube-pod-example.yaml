@@ -9,14 +9,24 @@ kind: Service
 metadata:
   name: pwe
   namespace: pwe
+  labels:
+    name: pwe
+    context: pwe
 spec:
   ports:
   - port: 80
     protocol: TCP
+    targetPort: 80
+  selector:
+    name: pwe
+    context: pwe
 ---
 apiVersion: v1
 kind: Pod
 metadata:
+  labels:
+    name: pwe
+    context: pwe
   name: pwe
   namespace: pwe
 spec:
