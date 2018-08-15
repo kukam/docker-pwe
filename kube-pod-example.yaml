@@ -1,0 +1,102 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "pwe2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pwe
+  namespace: pwe2
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pwe
+  namespace: pwe2
+spec:
+  containers:
+  - name: db
+    image: kukam/pwe-maria:latest
+    volumeMounts:
+    - name: maria-storage
+      mountPath: /dbhome
+    env:
+    - name: DB_ADMIN_PASSWORD 
+      value: "root123"
+    - name: DB_NAME
+      value: "pwe"
+    - name: DB_USER
+      value: "pwe"
+    - name: DB_USER_PASSWORD
+      value: "pwe"
+    ports:
+    - containerPort: 7775
+  - name: pwe
+    image: kukam/pwe:latest
+    volumeMounts:
+    - name: pwe-project
+      mountPath: /PWE/webapps/myproject
+    - name: pwe-uploadfile
+      mountPath: /PWE/webapps/myproject/uploadfile
+    env:
+    - name: PWESOURCE 
+      value: "https://github.com/kukam/PWE/trunk"
+    - name: MYPROJECT
+      value: "https://github.com/kukam/PWE/trunk/examples/generic_web"
+    - name: FCGI_SOCKET_PATH
+      value: ":7779"
+    - name: PWE_CONF_pwe_save_opt_to
+      value: "db"
+    - name: PWE_CONF_pwe_assets_dir
+      value: "assets, uploadfile/"
+    - name: PWE_CONF_pwe_upload_dir
+      value: "uploadfile/"
+    - name: PWE_CONF_pwe_assets_browse_dir
+      value: "uploadfile/"
+    - name: PWE_CONF_pwe_opts_dir
+      value: "sessions/"
+    - name: PWE_CONF_dbi_db1_dbdriver
+      value: "maria"
+    - name: PWE_CONF_dbi_db1_host
+      value: "pwe"
+    - name: PWE_CONF_dbi_db1_port
+      value: "7775"
+    - name: PWE_CONF_dbi_db1_schema
+      value: "public"
+    - name: PWE_CONF_dbi_db1_database
+      value: "pwe"
+    - name: PWE_CONF_dbi_db1_login
+      value: "pwe"
+    - name: PWE_CONF_dbi_db1_password
+      value: "pwe"
+    - name: PWE_CONF_dbi_db1_dbversion_file
+      value: "conf/maria_dbversion.pl"
+    - name: PWE_CONF_dbi_db1_trayconnect
+      value: "10"
+    - name: PWE_CONF_log_logout
+      value: "STDERR"
+    - name: PWE_CONF_log_loglevel
+      value: "3"
+    - name: PWE_CONF_log_log_delay
+      value: "1"
+    - name: PWE_CONF_log_log_delay_minimum
+      value: "0.1"
+    ports:
+    - containerPort: 7779
+  - name: webproxy
+    image: kukam/pwe-nginx:latest
+    ports:
+    - containerPort: 80
+  volumes:
+  - name: pwe-project
+    emptyDir: {}
+  - name: pwe-uploadfile
+    emptyDir: {}
+  - name: maria-storage
+    emptyDir: {}
