@@ -3,18 +3,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: pwe-db
-  name: pwe-db
+    app: pwe-maria
+  name: pwe-maria
   namespace: pwe
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pwe-db
+      app: pwe-maria
   template:
     metadata:
       labels:
-        app: pwe-db
+        app: pwe-maria
     spec:
       containers:
       - image: kukam/pwe-maria:latest
