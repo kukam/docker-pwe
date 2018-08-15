@@ -3,18 +3,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: pwe-db
-  name: pwe-db
+    app: pwe-postgres
+  name: pwe-postgres
   namespace: pwe
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pwe-db
+      app: pwe-postgres
   template:
     metadata:
       labels:
-        app: pwe-db
+        app: pwe-postgres
     spec:
       containers:
       - image: kukam/pwe-postgres:latest
