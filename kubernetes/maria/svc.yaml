@@ -8,4 +8,4 @@ spec:
   ports:
   - port: 7775
   selector:
-    app: pwe-db
+    app: pwe-maria
