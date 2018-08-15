@@ -21,4 +21,3 @@ spec:
         name: pwe-nginx
         ports:
         - containerPort: 80
-          name: pwe-nginx
