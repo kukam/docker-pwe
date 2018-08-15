@@ -3,17 +3,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    app: pwe-webproxy
-  name: pwe-webproxy
+    app: pwe-apache
+  name: pwe-apache
   namespace: pwe
 spec:
   selector:
     matchLabels:
-      app: pwe-webproxy
+      app: pwe-apache
   template:
     metadata:
       labels:
-        app: pwe-webproxy
+        app: pwe-apache
     spec:
       containers:
       - image: kukam/pwe-apache:latest
@@ -21,4 +21,4 @@ spec:
         name: pwe-apache
         ports:
         - containerPort: 80
-          name: pwe-webproxy
+          name: pwe-apache
