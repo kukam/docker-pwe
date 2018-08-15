@@ -5,7 +5,7 @@ metadata:
   labels:
     app: pwe-fcgi-maria
   name: pwe-fcgi-maria
-  namespace: pwe-fcgi-maria
+  namespace: pwe
 spec:
   selector:
     matchLabels:
