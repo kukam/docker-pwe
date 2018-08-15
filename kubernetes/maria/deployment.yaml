@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pwe-db
+  name: pwe-db
+  namespace: pwe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pwe-db
+  template:
+    metadata:
+      labels:
+        app: pwe-db
+    spec:
+      containers:
+      - image: kukam/pwe-maria:latest
+        imagePullPolicy: Always
+        name: pwe-maria
+        env:
+        - name: DB_ADMIN_PASSWORD 
+          value: "root123"
+        - name: DB_NAME
+          value: "pwe"
+        - name: DB_USER
+          value: "pwe"
+        - name: DB_USER_PASSWORD
+          value: "pwe"
+        ports:
+        - containerPort: 7775
+          name: pwe-db
+        volumeMounts:
+        - name: maria-storage
+          mountPath: /dbhome
+      volumes:
+      - name: maria-storage
+        emptyDir: {}

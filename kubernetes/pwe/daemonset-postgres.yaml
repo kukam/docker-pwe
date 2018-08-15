@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: pwe
+  name: pwe
+  namespace: pwe
+spec:
+  selector:
+    matchLabels:
+      app: pwe
+  template:
+    metadata:
+      labels:
+        app: pwe
+    spec:
+      containers:
+      - image: kukam/pwe:latest
+        imagePullPolicy: Always
+        name: pwe
+        env:
+        - name: PWESOURCE 
+          value: "https://github.com/kukam/PWE/trunk"
+        - name: MYPROJECT
+          value: "https://github.com/kukam/PWE/trunk/examples/generic_web"
+        - name: FCGI_SOCKET_PATH
+          value: ":7779"
+        - name: PWE_CONF_pwe_save_opt_to
+          value: "db"
+        - name: PWE_CONF_pwe_assets_dir
+          value: "assets, uploadfile/"
+        - name: PWE_CONF_pwe_upload_dir
+          value: "uploadfile/"
+        - name: PWE_CONF_pwe_assets_browse_dir
+          value: "uploadfile/"
+        - name: PWE_CONF_pwe_opts_dir
+          value: "sessions/"
+        - name: PWE_CONF_dbi_db1_dbdriver
+          value: "postgres"
+        - name: PWE_CONF_dbi_db1_host
+          value: "pwe-postgres-svc"
+        - name: PWE_CONF_dbi_db1_port
+          value: "7775"
+        - name: PWE_CONF_dbi_db1_schema
+          value: "public"
+        - name: PWE_CONF_dbi_db1_database
+          value: "pwe"
+        - name: PWE_CONF_dbi_db1_login
+          value: "pwe"
+        - name: PWE_CONF_dbi_db1_password
+          value: "pwe"
+        - name: PWE_CONF_dbi_db1_dbversion_file
+          value: "conf/postgres_dbversion.pl"
+        - name: PWE_CONF_dbi_db1_trayconnect
+          value: "10"
+        - name: PWE_CONF_log_logout
+          value: "STDERR"
+        - name: PWE_CONF_log_loglevel
+          value: "3"
+        - name: PWE_CONF_log_log_delay
+          value: "1"
+        - name: PWE_CONF_log_log_delay_minimum
+          value: "0.1"
+        ports:
+        - containerPort: 7779
+          name: pwe
+        volumeMounts:
+        - name: pwe-project
+          mountPath: /PWE/webapps/myproject
+        - name: pwe-uploadfile
+          mountPath: /PWE/webapps/myproject/uploadfile
+      volumes:
+      - name: pwe-project
+        emptyDir: {}
+      - name: pwe-uploadfile
+        emptyDir: {}
