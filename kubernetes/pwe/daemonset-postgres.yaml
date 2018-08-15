@@ -3,22 +3,22 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    app: pwe
-  name: pwe
+    app: pwe-fastcgi-postgres
+  name: pwe-fastcgi-postgres
   namespace: pwe
 spec:
   selector:
     matchLabels:
-      app: pwe
+      app: pwe-fastcgi-postgres
   template:
     metadata:
       labels:
-        app: pwe
+        app: pwe-fastcgi-postgres
     spec:
       containers:
       - image: kukam/pwe:latest
         imagePullPolicy: Always
-        name: pwe
+        name: pwe-fastcgi-postgres
         env:
         - name: PWESOURCE 
           value: "https://github.com/kukam/PWE/trunk"
