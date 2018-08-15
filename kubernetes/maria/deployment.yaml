@@ -31,7 +31,6 @@ spec:
           value: "pwe"
         ports:
         - containerPort: 7775
-          name: pwe-maria
         volumeMounts:
         - name: maria-storage
           mountPath: /dbhome
