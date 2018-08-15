@@ -8,4 +8,4 @@ spec:
   ports:
   - port: 7779
   selector:
-    app: pwe
+    app: pwe-fcgi-maria
