@@ -3,22 +3,22 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    app: pwe
-  name: pwe
-  namespace: pwe
+    app: pwe-fcgi-maria
+  name: pwe-fcgi-maria
+  namespace: pwe-fcgi-maria
 spec:
   selector:
     matchLabels:
-      app: pwe
+      app: pwe-fcgi-maria
   template:
     metadata:
       labels:
-        app: pwe
+        app: pwe-fcgi-maria
     spec:
       containers:
       - image: kukam/pwe:latest
         imagePullPolicy: Always
-        name: pwe
+        name: pwe-fcgi-maria
         env:
         - name: PWESOURCE 
           value: "https://github.com/kukam/PWE/trunk"
