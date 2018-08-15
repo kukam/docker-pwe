@@ -3,17 +3,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    app: pwe-webproxy
-  name: pwe-webproxy
+    app: pwe-nginx
+  name: pwe-nginx
   namespace: pwe
 spec:
   selector:
     matchLabels:
-      app: pwe-webproxy
+      app: pwe-nginx
   template:
     metadata:
       labels:
-        app: pwe-webproxy
+        app: pwe-nginx
     spec:
       containers:
       - image: kukam/pwe-nginx:latest
@@ -21,4 +21,4 @@ spec:
         name: pwe-nginx
         ports:
         - containerPort: 80
-          name: pwe-webproxy
+          name: pwe-nginx
