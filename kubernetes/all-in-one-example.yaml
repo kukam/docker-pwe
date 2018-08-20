@@ -111,6 +111,25 @@ spec:
   - name: maria-storage
     emptyDir: {}
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pwe-nginx-ingress
+  namespace: pwe
+spec:
+  tls:
+  - hosts:
+    - pwe.kube.freebox.cz
+    secretName: pwe-secret
+  rules:
+  - host: pwe.kube.freebox.cz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pwe
+          servicePort: 80    
+---
 apiVersion: v1
 kind: Secret
 metadata:
