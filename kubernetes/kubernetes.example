@@ -1,0 +1,23 @@
+# baseic
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/ns.yaml
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/certificate.yaml
+kubectl apply -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/secret.yaml
+# apache
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/apache/daemonset.yaml
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/apache/svc.yaml
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/apache/ingress.yaml
+# nginx
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/nginx/daemonset.yaml
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/nginx/svc.yaml
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/nginx/ingress.yaml
+# postgres
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/postgres/deployment.yaml
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/postgres/svc.yaml
+# maria
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/maria/deployment.yaml
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/maria/svc.yaml
+#pwe maria or postgres
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/pwe/daemonset-maria.yaml
+kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/pwe/svc-maria.yaml
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/pwe/daemonset-postgres.yaml
+#kubectl create -f https://raw.githubusercontent.com/kukam/docker-pwe/master/kubernetes/pwe/svc-postgres.yaml
