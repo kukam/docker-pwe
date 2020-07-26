@@ -9,7 +9,7 @@
     "image": "kukam/pwe:latest"
   },
   {
-    "type": 1,
+    "type": 3,
     "title": "PWE stack",
     "description": "PWE setup with a MySQL or Postgres database",
     "note": "Deploys a PWE instance connected to a MySQL or Postgres database.",
