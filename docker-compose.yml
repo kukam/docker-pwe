@@ -49,7 +49,7 @@ services:
      stdin_open: true
      tty: true
      ports:
-       - "7778:80"
+       - "${WEBSERVER_PUB_PORT:-7778}:80"
      volumes:
        - /etc/localtime:/etc/localtime:ro
 
