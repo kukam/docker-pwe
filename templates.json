@@ -13,6 +13,20 @@
     },
     "env": [
       {
+        "name": "WEBSERVER_NAME",
+        "label": "webserver driver",
+        "select": [
+        {
+          "text": "Apache",
+          "value": "apache"
+        },
+        {
+          "text": "Nginx",
+          "value": "nginx"
+        }
+        ]
+      },    
+      {
         "name": "DB_DRIVER",
         "label": "Database driver",
         "select": [
