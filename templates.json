@@ -1,14 +1,5 @@
 [
   {
-    "type": 1,
-    "title": "PWE",
-    "description": "PWE",
-    "categories": ["docker"],
-    "platform": "linux",
-    "logo": "https://raw.githubusercontent.com/kukam/docker-pwe/master/perl.png",
-    "image": "kukam/pwe:latest"
-  },
-  {
     "type": 3,
     "title": "PWE stack",
     "description": "PWE setup with a MySQL or Postgres database",
