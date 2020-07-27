@@ -42,23 +42,28 @@
       },
       {
         "name": "WEBSERVER_PUB_PORT",
-        "label": "Webserver public port"
+        "label": "Webserver public port",
+        "default": "7778"
       },     
       {
         "name": "DB_ADMIN_PASSWORD",
-        "label": "Database admin password"
+        "label": "Database admin password",
+        "default": "admin"
       },
       {
         "name": "DB_NAME",
-        "label": "Database name"
+        "label": "Database name",
+        "default": "pwe"
       },
       {
         "name": "DB_USER",
-        "label": "Database user name"
+        "label": "Database user name",
+        "default": "pwe"
       },
       {
         "name": "DB_USER_PASSWORD",
-        "label": "Database user password"
+        "label": "Database user password",
+        "default": "pwe"
       }    
     ]
   }
