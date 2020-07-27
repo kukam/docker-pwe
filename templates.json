@@ -42,9 +42,7 @@
       },
       {
         "name": "WEBSERVER_PUB_PORT",
-        "label": "Webserver public port",
-        "default": 1234,
-        "value": 5678
+        "label": "Webserver public port"
       },     
       {
         "name": "DB_ADMIN_PASSWORD",
