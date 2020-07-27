@@ -15,6 +15,7 @@
       {
         "name": "WEBSERVER_NAME",
         "label": "webserver driver",
+        "default": "nginx",        
         "select": [
         {
           "text": "Apache",
@@ -29,6 +30,7 @@
       {
         "name": "DB_DRIVER",
         "label": "Database driver",
+        "default": "maria",
         "select": [
         {
           "text": "MariaDB",
