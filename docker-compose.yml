@@ -19,6 +19,8 @@ services:
        - myproject:/PWE/webapps/myproject
        - uploadfile:/PWE/webapps/myproject/uploadfile
        - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 2       
      stdin_open: true
      tty: true
      environment:
